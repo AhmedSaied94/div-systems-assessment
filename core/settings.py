@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # custom apps
-
+    'div_systems.apps.DivSystemsConfig'
 
     # 3rd party apps
     'rest_framework_simplejwt',
