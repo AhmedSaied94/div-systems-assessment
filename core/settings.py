@@ -32,7 +32,6 @@ DEBUG = True
 SECRET_KEY = os.environ['DEV_KEY'] if DEBUG else os.environ['PROD_KEY']
 
 
-
 ALLOWED_HOSTS = ['localhost', '0.0.0.0']
 
 
@@ -53,19 +52,25 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # custom apps
-    'div_systems.apps.DivSystemsConfig'
+    'div_systems',
+
 
     # 3rd party apps
     'rest_framework_simplejwt',
     'countries_plus',
     'corsheaders',
+    'django_extensions'
 
 ]
 
 
-## must add for admin_interface if django version >= 3
+# must add for admin_interface if django version >= 3
 X_FRAME_OPTIONS = "SAMEORIGIN"
 SILENCED_SYSTEM_CHECKS = ["security.W019"]
+
+# default user model
+
+AUTH_USER_MODEL = 'div_systems.UserProfile'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -137,7 +142,7 @@ REST_FRAMEWORK = {
 }
 
 
-## Simple_jwt settings
+# Simple_jwt settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
