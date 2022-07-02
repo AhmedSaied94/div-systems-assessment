@@ -1,5 +1,13 @@
 # Div-Systems-Task
 
+this project built using django and rest framework
+and using 3rd party packages like
+
+- django-countries-plus
+- django-corsheaders
+- restframework-simplejwt
+- django-admin-interface
+
 ### Get started
 
 - first clone the app
