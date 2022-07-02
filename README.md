@@ -3,7 +3,9 @@
 ### Get started
 
 - first clone the app
-- run pipenv install
+- run cd div-systems-assessment
+- run pipenv shell & pipenv install
+- or run pip install requirements.txt
 - run python manage.py migrate
 - run python manage.py update_countries_plus
 - run python manage.py run server
