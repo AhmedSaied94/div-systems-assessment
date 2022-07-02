@@ -11,9 +11,11 @@ pillow = "*"
 python-decouple = "*"
 djangorestframework-simplejwt = "*"
 django-extensions = "*"
-django-countries-plus = "*"
 django-admin-interface = "*"
 django-cors-headers = "*"
+twilio = "*"
+django-countries-plus = "*"
+python-magic = "*"
 
 [dev-packages]
 autopep8 = "*"

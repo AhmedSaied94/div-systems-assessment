@@ -1,11 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.apps import apps
-from django.contrib.auth.validators import UnicodeUsernameValidator
-from countries_plus.models import Country
-from django.urls import reverse
-from django.core.validators import RegexValidator
+
 # Create your models here.
 
 
@@ -13,14 +9,7 @@ class UserProfileManager(BaseUserManager):
 
     def create_user(self, first_name, last_name, country_code, phone_number, gender, birthdate, password=None, **kwargs):
         if not phone_number:
-            raise ValueError('You must enter an email address')
-        # GlobalUserModel = apps.get_model(
-        #     self.model._meta.app_label, self.model._meta.object_name)
-        # first_name = GlobalUserModel.normalize_first_name(first_name)
-        # last_name = GlobalUserModel.normalize_last_name(last_name)
-        # country_code = GlobalUserModel.normalize_country_code(country_code)
-        # phone_number = GlobalUserModel.normalize_phone_number(phone_number)
-        # gender = GlobalUserModel.normalize_gender(gender)
+            raise ValueError('You must enter a phone number')
 
         user = self.model(first_name=first_name, last_name=last_name,
                           country_code=country_code, phone_number=phone_number, gender=gender, birthdate=birthdate, **kwargs)
@@ -38,18 +27,19 @@ class UserProfileManager(BaseUserManager):
 
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
-    class Gender(models.TextChoices):
-        male = 'male', 'MALE'
-        female = 'female', 'FEMALE'
 
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    country_code = models.CharField(max_length=50)
-    phone_number = models.CharField(max_length=20, unique=True)
-    gender = models.CharField(max_length=20, choices=Gender.choices)
-    birthdate = models.DateField(auto_now=False, auto_now_add=False)
-    avatar = models.ImageField(upload_to='avatars', null=True, blank=True)
-    email = models.EmailField(max_length=254, null=True, blank=True)
+    first_name = models.CharField(max_length=50, )
+    last_name = models.CharField(max_length=50, )
+    country_code = models.CharField(max_length=20, )
+    phone_number = models.CharField(
+        max_length=20, unique=True, )
+    gender = models.CharField(
+        max_length=20, )
+    birthdate = models.DateField(
+        auto_now=False, auto_now_add=False, )
+    avatar = models.FileField(upload_to='avatars')
+    email = models.CharField(
+        max_length=254, null=True, blank=True, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -65,6 +55,3 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
-
-    def get_absolute_url(self):
-        return reverse("UserProfile_detail", kwargs={"pk": self.pk})
